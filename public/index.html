@@ -38,7 +38,7 @@ async function loadBooks(){const books=await api('/api/books');const box=$('book
 let books=[];
 async function readBook(id){books=await api('/api/books');const b=books.find(x=>x.id===id);if(!b)return;$('rt').textContent=b.title;$('rg').textContent=b.genre;$('rd').textContent=b.description;$('rc').textContent=b.chapter;$('reader').style.display='block'}
 function closeReader(){$('reader').style.display='none'}
-function showAdmin(){document.querySelector('.admin').style.display='block'}
+function showAdmin(){document.querySelector('.admin').style.display='block'} 
 async function login(){try{await api('/api/login',{method:'POST',body:JSON.stringify({password:$('password').value})});$('loginBox').style.display='none';$('panel').style.display='block';loadAdmin()}catch(e){$('loginMsg').textContent=e.message}}
 async function logout(){await api('/api/logout',{method:'POST'});location.reload()}
 async function loadAdmin(){const bs=await api('/api/admin/books');$('adminBooks').innerHTML=bs.length?bs.map(b=>`<div class="item"><h3>${esc(b.title)}</h3><p class="muted">${esc(b.genre)} · ${b.published?'Yayında':'Taslak'}</p><div class="item-actions"><button class="btn" onclick="toggleBook(${b.id},${!b.published})">${b.published?'Yayından Kaldır':'Yayınla'}</button><button class="btn danger" onclick="deleteBook(${b.id})">Sil</button></div></div>`).join(''):'<div class="empty">Henüz kitap eklemedin.</div>'}
